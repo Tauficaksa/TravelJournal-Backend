@@ -1,0 +1,23 @@
+{
+  "name": "traveljournal-backend",
+  "version": "1.0.0",
+  "description": "backend part of traveljournal ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tauficaksa/TravelJournal-Backend.git"
+  },
+  "author": "tauficaksa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tauficaksa/TravelJournal-Backend/issues"
+  },
+  "homepage": "https://github.com/Tauficaksa/TravelJournal-Backend#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "sequelize": "^6.37.6"
+  }
+}
