@@ -39,7 +39,7 @@ const likeController = require("../controllers/likeController");
 
 /**
  * @swagger
- * /likes:
+ * /api/likes/:
  *   post:
  *     summary: Like a journal
  *     tags: [Likes]
@@ -75,7 +75,7 @@ router.post("/", likeController.likeJournal);
 
 /**
  * @swagger
- * /likes/{id}:
+ * /api/likes/{id}:
  *   delete:
  *     summary: Unlike a journal
  *     tags: [Likes]

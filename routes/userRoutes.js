@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const multer = require("multer");
+
+// Multer configuration for image uploads
+const storage = multer.memoryStorage(); // Store image in memory (change if needed)
+const upload = multer({ storage });
 
 /**
  * @swagger
@@ -11,6 +16,7 @@ const userController = require("../controllers/userController");
  *       required:
  *         - name
  *         - email
+ *         - pwd
  *       properties:
  *         id:
  *           type: string
@@ -23,14 +29,19 @@ const userController = require("../controllers/userController");
  *           type: string
  *           format: email
  *           description: User's email address
+ *         pwd:
+ *           type: string
+ *           format: password
+ *           description: User's password
  *         profile_image:
  *           type: string
- *           description: URL to the user's profile image
+ *           format: binary
+ *           description: User's profile image stored as binary data
  *       example:
  *         id: "123e4567-e89b-12d3-a456-426614174000"
  *         name: "John Doe"
  *         email: "johndoe@example.com"
- *         profile_image: "https://example.com/profile.jpg"
+ *         pwd: "securepassword123"
  */
 
 /**
@@ -42,7 +53,7 @@ const userController = require("../controllers/userController");
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Get all users
  *     tags: [Users]
@@ -60,41 +71,46 @@ router.get("/", userController.getAllUsers);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
  *               - name
  *               - email
+ *               - pwd
  *             properties:
  *               name:
  *                 type: string
  *               email:
  *                 type: string
  *                 format: email
+ *               pwd:
+ *                 type: string
+ *                 format: password
  *               profile_image:
  *                 type: string
- *                 description: Profile image URL
+ *                 format: binary
+ *                 description: Profile image file
  *     responses:
  *       201:
  *         description: User created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
+ *       409:
+ *         description: Email already exists
+ *       400:
+ *         description: Missing required fields
  */
-router.post("/", userController.createUser);
+router.post("/", upload.single("profile_image"), userController.createUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     summary: Update a user
  *     tags: [Users]
@@ -109,7 +125,7 @@ router.post("/", userController.createUser);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -120,19 +136,20 @@ router.post("/", userController.createUser);
  *                 format: email
  *               profile_image:
  *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: User updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *       400:
+ *         description: Invalid user ID format
  */
-router.put("/:id", userController.updateUser);
+router.put("/:id", upload.single("profile_image"), userController.updateUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Users]
@@ -149,6 +166,8 @@ router.put("/:id", userController.updateUser);
  *         description: User deleted successfully
  *       404:
  *         description: User not found
+ *       400:
+ *         description: Invalid user ID format
  */
 router.delete("/:id", userController.deleteUser);
 

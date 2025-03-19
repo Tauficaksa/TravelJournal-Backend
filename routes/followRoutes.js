@@ -39,7 +39,7 @@ const followController = require("../controllers/followController");
 
 /**
  * @swagger
- * /follow:
+ * /api/follows/:
  *   post:
  *     summary: Follow a user
  *     tags: [Follows]
@@ -75,7 +75,7 @@ router.post("/follow", followController.followUser);
 
 /**
  * @swagger
- * /unfollow:
+ * /api/follows/:
  *   delete:
  *     summary: Unfollow a user
  *     tags: [Follows]
