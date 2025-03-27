@@ -21,16 +21,14 @@ exports.likeJournal = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 exports.unlikeJournal = async (req, res) => {
     try {
-        const { user_id, journal_id } = req.body;
+        const { user_id, journal_id } = req.body; // Read from body
 
         if (!user_id || !journal_id) {
             return res.status(400).json({ error: "user_id and journal_id are required" });
         }
 
-        // Check if the like exists before deleting
         const like = await Like.findOne({ where: { user_id, journal_id } });
         if (!like) {
             return res.status(404).json({ error: "Like not found" });

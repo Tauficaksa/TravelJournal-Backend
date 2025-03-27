@@ -72,26 +72,39 @@ const likeController = require("../controllers/likeController");
  *         description: Bad request
  */
 router.post("/", likeController.likeJournal);
-
 /**
  * @swagger
- * /api/likes/{id}:
+ * /api/likes:
  *   delete:
  *     summary: Unlike a journal
  *     tags: [Likes]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the like entry to be removed
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - user_id
+ *               - journal_id
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *                 description: The ID of the user unliking the journal
+ *               journal_id:
+ *                 type: string
+ *                 description: The ID of the journal to be unliked
  *     responses:
  *       200:
  *         description: Journal unliked successfully
  *       400:
- *         description: Bad request
+ *         description: Bad request, missing parameters
+ *       404:
+ *         description: Like not found
+ *       500:
+ *         description: Internal server error
  */
-router.delete("/:id", likeController.unlikeJournal);
+router.delete("/", likeController.unlikeJournal);
+
 
 module.exports = router;
