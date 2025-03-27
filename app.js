@@ -4,10 +4,13 @@ const journalRoutes = require("./routes/journalRoutes");
 const likeRoutes = require("./routes/likeRoutes");
 const followRoutes = require("./routes/followRoutes");
 const setupSwagger = require("./swagger");
+const path=require("path")
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Register API routes
 app.use("/api/users", userRoutes);

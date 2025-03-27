@@ -7,9 +7,8 @@ const TravelJournal = sequelize.define("TravelJournal", {
     user_id: { type: DataTypes.UUID, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: true },
-    status: { type: DataTypes.ENUM("private", "public"), allowNull: false, defaultValue: "public" },
     location: { type: DataTypes.STRING, allowNull: false },
-    image: { type: DataTypes.BLOB("long"), allowNull: true }, // Store actual image binary data
+    image: { type: DataTypes.STRING, allowNull: true },
 }, { timestamps: false });
 
 User.hasMany(TravelJournal, { foreignKey: "user_id", onDelete: "CASCADE" });
