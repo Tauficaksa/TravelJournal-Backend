@@ -11,7 +11,7 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING, 
         allowNull: true, 
         unique: true, 
-        defaultValue: "firebaseid" // Default value set
+        defaultValue: "firebaseid"
     },
     name: { 
         type: DataTypes.STRING, 
