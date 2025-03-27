@@ -9,9 +9,8 @@ const User = sequelize.define("User", {
     },
     firebase_uid: { 
         type: DataTypes.STRING, 
-        allowNull: true, 
-        unique: true, 
-        defaultValue: "firebaseid" // Default value set
+        allowNull: true,
+        defaultValue: "firebaseid"
     },
     name: { 
         type: DataTypes.STRING, 
