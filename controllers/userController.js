@@ -1,5 +1,7 @@
 const { User } = require("../models");
 const { Op } = require("sequelize");
+const path=require("path")
+const fs=require("fs")
 
 // Get all users (Retrieve Image as Base64)
 exports.getAllUsers = async (req, res) => {
@@ -43,25 +45,29 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email } = req.body;
-
+        let { name, email } = req.body;
+        console.log(req.body)
         const user = await User.findByPk(id);
         if (!user) return res.status(404).json({ error: "User not found" });
-        let imageUrl = user.image;
+        let imageUrl = user.profile_image;
+        if(name=="") name=null
+        if(email=="") email=null
+        console.log ("file is" +req.file)
         if (req.file) {
             // Delete old image if it exists
-            if (user.image) {
-                const oldImagePath = path.join(__dirname, "..", journal.image);
+            if (user.profile_image) {
+                const oldImagePath = path.join(__dirname, "..", user.profile_image.substring(1));
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
+                    console.log("olg image deleted")
                 }
             }
             imageUrl = `/uploads/${req.file.filename}`;
         }
 
         await user.update({
-            name,
-            email,
+            name:name||user.name,
+            email:email||user.email,
             profile_image: imageUrl
         });
 
@@ -79,8 +85,8 @@ exports.deleteUser = async (req, res) => {
         const user = await User.findByPk(id);
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        if (user.image) {
-            const imagePath = path.join(__dirname, "..", journal.image);
+        if (user.profile_image) {
+            const imagePath = path.join(__dirname, "..", user.profile_image.substring(1));
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }

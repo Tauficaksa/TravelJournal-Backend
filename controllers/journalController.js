@@ -41,7 +41,7 @@ exports.updateJournal = async (req, res) => {
         if (req.file) {
             // Delete old image if it exists
             if (journal.image) {
-                const oldImagePath = path.join(__dirname, "..", journal.image);
+                const oldImagePath = path.join(__dirname, "..", journal.image.substring(1));
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
                 }
@@ -73,7 +73,7 @@ exports.deleteJournal = async (req, res) => {
 
         // Delete associated image
         if (journal.image) {
-            const imagePath = path.join(__dirname, "..", journal.image);
+            const imagePath = path.join(__dirname, "..", journal.image.substring(1));
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }
