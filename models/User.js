@@ -26,8 +26,8 @@ const User = sequelize.define("User", {
         allowNull: false  // Ensure password is required
     },
     profile_image: { 
-        type: DataTypes.BLOB("long"), 
-        allowNull: true  // Store actual image binary data
+        type: DataTypes.STRING, 
+        allowNull: true 
     }
 }, { timestamps: false });
 

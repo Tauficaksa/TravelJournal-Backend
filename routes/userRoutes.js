@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const multer = require("multer");
-
-// Multer configuration for image uploads
-const storage = multer.memoryStorage(); // Store image in memory (change if needed)
-const upload = multer({ storage });
+const upload=require("../middleware/upload")
 
 /**
  * @swagger
@@ -170,5 +166,7 @@ router.put("/:id", upload.single("profile_image"), userController.updateUser);
  *         description: Invalid user ID format
  */
 router.delete("/:id", userController.deleteUser);
+
+router.post("/login",userController.login)
 
 module.exports = router;
