@@ -65,6 +65,8 @@ const upload=require("../middleware/upload")
  */
 router.get("/", userController.getAllUsers);
 
+router.get("/:id",userController.getUser)
+
 /**
  * @swagger
  * /api/users:

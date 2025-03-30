@@ -73,7 +73,7 @@ const upload=require('../middleware/upload')
  *               items:
  *                 $ref: '#/components/schemas/TravelJournal'
  */
-router.get("/", journalController.getJournals);
+router.get("/alljournals/:id", journalController.getJournals);
 
 /**
  * @swagger

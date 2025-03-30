@@ -71,7 +71,7 @@ const likeController = require("../controllers/likeController");
  *       400:
  *         description: Bad request
  */
-router.post("/", likeController.likeJournal);
+router.post("/like", likeController.likeJournal);
 /**
  * @swagger
  * /api/likes:
@@ -104,7 +104,9 @@ router.post("/", likeController.likeJournal);
  *       500:
  *         description: Internal server error
  */
-router.delete("/", likeController.unlikeJournal);
+router.post("/unlike", likeController.unlikeJournal);
+
+router.get("/getLikedJournals/:id",likeController.getLinkedJournals)
 
 
 module.exports = router;

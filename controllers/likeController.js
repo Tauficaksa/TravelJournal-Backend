@@ -1,4 +1,5 @@
 const Like = require("../models/Like");
+const Journal=require("../models/TravelJournal")
 
 exports.likeJournal = async (req, res) => {
     try {
@@ -40,3 +41,24 @@ exports.unlikeJournal = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getLinkedJournals=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const likedrecords=await Like.findAll({
+            where:{
+                user_id:id
+            }
+        })
+        const likedids=likedrecords.map(record=>record.journal_id)
+        const likedjournals=await Journal.findAll({
+            where:{
+                id:likedids
+            }
+        })
+        res.status(200).json(likedjournals)
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:error.message})
+    }
+}

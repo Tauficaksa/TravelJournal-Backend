@@ -13,6 +13,24 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+exports.getUser=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const user=await User.findOne({
+            where:{
+                id:id
+            }
+        })
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        res.status(200).json(user)
+    }catch(error){
+        console.log(error)
+        res.statuc(500).json({error:error.message})
+    }
+}
+
 // Create User (Handle Image Upload)
 exports.createUser = async (req, res) => {
     try {
@@ -40,6 +58,16 @@ exports.createUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getFollowing=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const following=User.findAll
+
+    }catch(error){
+        console.log(error)
+    }
+}
 
 // Update User
 exports.updateUser = async (req, res) => {

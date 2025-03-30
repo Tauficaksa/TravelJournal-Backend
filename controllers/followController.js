@@ -1,4 +1,5 @@
 const Follow = require("../models/Follow");
+const User=require("../models/User")
 
 exports.followUser = async (req, res) => {
     try {
@@ -38,3 +39,24 @@ exports.unfollowUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getFollowingUsers=async(req,res)=>{
+    try{
+        const {id}= req.params
+        const followersrecords=await Follow.findAll({
+            where:{
+                follower_id:id
+            },
+        })
+        const followingids=followersrecords.map(record=>record.following_id)
+        const followingUsers=await User.findAll({
+            where:{
+                id:followingids
+            }
+        })
+        res.status(200).json(followingUsers)
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:error.message})
+    }
+}

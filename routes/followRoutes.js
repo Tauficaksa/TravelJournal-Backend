@@ -103,6 +103,8 @@ router.post("/follow", followController.followUser);
  *       400:
  *         description: Bad request
  */
-router.delete("/unfollow", followController.unfollowUser);
+router.post("/unfollow", followController.unfollowUser);
+
+router.get("/getFollowingUsers/:id",followController.getFollowingUsers)
 
 module.exports = router;
