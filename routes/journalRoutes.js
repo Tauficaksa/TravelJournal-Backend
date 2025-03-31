@@ -181,4 +181,6 @@ router.put("/:id", upload.single("image"), journalController.updateJournal);
  */
 router.delete("/:id", journalController.deleteJournal);
 
+router.get("/journalsOfUser/:id",journalController.getJournalsOfUser)
+
 module.exports = router;

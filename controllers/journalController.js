@@ -1,7 +1,7 @@
 const TravelJournal = require("../models/TravelJournal");
 const path = require("path");
 const fs = require("fs");
-const {Op}=require("sequelize")
+const {Op}=require("sequelize");
 
 // Create a Travel Journal
 exports.createJournal = async (req, res) => {
@@ -34,6 +34,20 @@ exports.getJournals = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getJournalsOfUser=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const journals=await TravelJournal.findAll({
+            where:{
+                user_id:id
+            }
+        })
+        res.status(200).json(journals)
+    }catch(error){
+        res.status(500).json({error:error.message})
+    }
+}
 
 // Update Journal
 exports.updateJournal = async (req, res) => {

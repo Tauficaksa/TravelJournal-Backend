@@ -60,3 +60,25 @@ exports.getFollowingUsers=async(req,res)=>{
         res.status(500).json({error:error.message})
     }
 }
+
+exports.getFollowerUsers=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const followerrecords=await Follow.findAll({
+            where:{
+                following_id:id
+            }
+        })
+        const followerids=followerrecords.map(record=>record.follower_id)
+        const followers=await User.findAll({
+            where:{
+                id:followerids
+            }
+        })
+        res.status(200).json(followers)
+
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:error.message})
+    }
+}

@@ -107,4 +107,6 @@ router.post("/unfollow", followController.unfollowUser);
 
 router.get("/getFollowingUsers/:id",followController.getFollowingUsers)
 
+router.get("/getFollowerUsers/:id",followController.getFollowerUsers)
+
 module.exports = router;
