@@ -108,5 +108,7 @@ router.post("/unlike", likeController.unlikeJournal);
 
 router.get("/getLikedJournals/:id",likeController.getLinkedJournals)
 
+router.get("/getLikedUsers/:id",likeController.getLikedUsers)
+
 
 module.exports = router;
