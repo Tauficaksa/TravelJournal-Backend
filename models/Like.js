@@ -10,6 +10,9 @@ const Like = sequelize.define("Like", {
 }, { timestamps: false });
 
 User.hasMany(Like, { foreignKey: "user_id", onDelete: "CASCADE" });
+Like.belongsTo(User, { foreignKey: "user_id", onDelete: "CASCADE" });
+
 TravelJournal.hasMany(Like, { foreignKey: "journal_id", onDelete: "CASCADE" });
+Like.belongsTo(TravelJournal, { foreignKey: "journal_id", onDelete: "CASCADE" });
 
 module.exports = Like;

@@ -64,6 +64,20 @@ exports.getLikedUsers=async(req,res)=>{
     }
 }
 
+exports.getLikeCount=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const likedrecords=await Like.count({
+            where:{
+                journal_id:id
+            }
+        })
+        res.status(200).json(likedrecords)
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
 exports.getLinkedJournals=async(req,res)=>{
     try{
         const {id}=req.params

@@ -12,6 +12,6 @@ const TravelJournal = sequelize.define("TravelJournal", {
 }, { timestamps: false });
 
 User.hasMany(TravelJournal, { foreignKey: "user_id", onDelete: "CASCADE" });
-TravelJournal.belongsTo(User, { foreignKey: "user_id" });
+TravelJournal.belongsTo(User, { foreignKey: "user_id", onDelete: "CASCADE" });
 
 module.exports = TravelJournal;

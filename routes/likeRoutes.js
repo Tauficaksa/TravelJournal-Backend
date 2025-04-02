@@ -110,5 +110,7 @@ router.get("/getLikedJournals/:id",likeController.getLinkedJournals)
 
 router.get("/getLikedUsers/:id",likeController.getLikedUsers)
 
+router.get("/likecount/:id",likeController.getLikeCount)
+
 
 module.exports = router;

@@ -9,5 +9,9 @@ const Follow = sequelize.define("Follow", {
 }, { timestamps: false });
 
 User.hasMany(Follow, { foreignKey: "follower_id", onDelete: "CASCADE" });
+Follow.belongsTo(User, { foreignKey: "follower_id", onDelete: "CASCADE" });
+
+User.hasMany(Follow, { foreignKey: "following_id", onDelete: "CASCADE" });
+Follow.belongsTo(User, { foreignKey: "following_id", onDelete: "CASCADE" });
 
 module.exports = Follow;
