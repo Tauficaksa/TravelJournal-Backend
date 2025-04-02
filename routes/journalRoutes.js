@@ -157,7 +157,7 @@ router.post("/", upload.single("image"), journalController.createJournal);
  *       404:
  *         description: Journal not found
  */
-router.put("/:id", upload.single("image"), journalController.updateJournal);
+router.put("/:id", journalController.updateJournal);
 
 /**
  * @swagger

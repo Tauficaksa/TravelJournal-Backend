@@ -53,31 +53,19 @@ exports.getJournalsOfUser=async(req,res)=>{
 exports.updateJournal = async (req, res) => {
     try {
         const { id } = req.params;
-        const { user_id, name, description, location } = req.body;
+        let {name, description, location} = req.body;
         const journal = await TravelJournal.findByPk(id);
         if (!journal) return res.status(404).json({ error: "Journal not found" });
-
-        let imageUrl = journal.image;
-        if (req.file) {
-            // Delete old image if it exists
-            if (journal.image) {
-                const oldImagePath = path.join(__dirname, "..", journal.image.substring(1));
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
-                }
-            }
-            imageUrl = `/uploads/${req.file.filename}`;
-        }
-
+        if(name=="") name=null
+        if(description=="") description=null
+        if(location=="") location=null
         await journal.update({
-            user_id,
-            name,
-            description,
-            location,
-            image: imageUrl
+            name:name||journal.name,
+            description:description||journal.description,
+            location:location||journal.location
         });
 
-        res.status(200).json({ message: "Journal updated successfully", journal });
+        res.status(200).json({ message: "Journal updated successfully"});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
