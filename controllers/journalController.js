@@ -1,7 +1,7 @@
 const TravelJournal = require("../models/TravelJournal");
 const path = require("path");
 const fs = require("fs");
-const {Op}=require("sequelize");
+const {Op, Sequelize}=require("sequelize");
 
 // Create a Travel Journal
 exports.createJournal = async (req, res) => {
@@ -27,7 +27,11 @@ exports.getJournals = async (req, res) => {
         const journals = await TravelJournal.findAll({
             where:{
                 user_id:{[Op.ne]:id}
-            }
+            },
+            order: [
+                [Sequelize.literal('RAND()')]
+            ]
+            
         });
         res.status(200).json(journals);
     } catch (error) {
